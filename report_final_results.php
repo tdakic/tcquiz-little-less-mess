@@ -15,12 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This script controls the display of the quiz reports.
- *
- * @package   mod_quiz
- * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+* This script reports the class final results (graph).
+*
+* @package   quizaccess_tcquiz
+* @copyright 2024 Tamara Dakic @Capilano University
+* @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+*/
+
+namespace quizaccess_tcquiz;
 
 use mod_quiz\quiz_settings;
 use html_writer;
@@ -30,57 +32,50 @@ define('NO_OUTPUT_BUFFERING', true);
 require_once(__DIR__ . '/../../../../config.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->dirroot . '/mod/quiz/report/reportlib.php');
+require_once($CFG->dirroot . '/mod/quiz/accessrule/tcquiz/locallib.php'); //for constants
 
 global $DB;
 
 $id = optional_param('id', 0, PARAM_INT);
 $q = optional_param('quizid', 0, PARAM_INT);
 $sessionid = optional_param('tcqsid', 0, PARAM_INT);
-//$mode = optional_param('mode', '', PARAM_ALPHA);
-//TTT
-
 
 $mode ="overview";
 
-//not an tcquiz?
 //make sure that the quiz is set up as a tcquiz
 if (!$tcquiz = $DB->get_record('quizaccess_tcquiz', array('quizid' => $q))){
   //Add new exceptions
   throw new moodle_exception('nottcquiz', 'quizaccess_tcquiz', new moodle_url('/my/courses.php', []));
 }
 
-//make sure that the user is not trying to attempt the wrong page -- resend them to the start pages if they do
+//make sure that the the session exists
 if (!$tcquizsession = $DB->get_record('quizaccess_tcquiz_session', array('id' => $sessionid))){
-  throw new moodle_exception('nosession', 'quizaccess_tcquiz', new moodle_url('/my/courses.php', []));
-
+  throw new moodle_exception('nosession', 'quizaccess_tcquiz', new \moodle_url('/mod/quiz/view.php',['id' => $id ]));
 }
+
 //if the state of the quiz is different than TCQUIZ_STATUS_FINALRESULTS = 40 defined in locallib.php
-if ($tcquizsession->status != 40){
-  throw new moodle_exception('notrightquizstate', 'quizaccess_tcquiz', new moodle_url('/my/courses.php', []));
-
+if ($tcquizsession->status != TCQUIZ_STATUS_FINALRESULTS){
+  throw new moodle_exception('notrightquizstate', 'quizaccess_tcquiz', new \moodle_url('/mod/quiz/view.php',['id' => $id ]));
 }
-
-//$page = $attemptobj->force_page_number_into_range($page);
-//$PAGE->set_url($attemptobj->attempt_url(null, $page));
-
-$PAGE->set_cacheable(false);
-
-
 
 if ($id) {
     $quizobj = quiz_settings::create_for_cmid($id);
 } else {
     $quizobj = quiz_settings::create($q);
 }
+
+//make sure that the user is the owner of the session
+if (!$quizobj->is_preview_user() || $tcquizsession->teacherid != $USER->id){
+      throw new \moodle_exception('notyoursession', 'quizaccess_tcquiz', $quizobj->view_url());
+}
+
 $quiz = $quizobj->get_quiz();
 $cm = $quizobj->get_cm();
 $course = $quizobj->get_course();
 
-$url = new moodle_url('/mod/quiz/view.php', ['id' => $cm->id]);
-if ($mode !== '') {
-    $url->param('mode', $mode);
-}
+$url = new \moodle_url('/mod/quiz/view.php', ['id' => $cm->id]);
 $PAGE->set_url($url);
+$PAGE->set_cacheable(false);
 
 require_login($course, false, $cm);
 
@@ -117,12 +112,11 @@ if (!class_exists($reportclassname)) {
 
 $report = new $reportclassname();
 
-
 $report->tcq_display_final_graph($quiz, $cm, $course,$sessionid);
 
-$process_url = new moodle_url(new moodle_url('/mod/quiz/accessrule/tcquiz/end_session.php'),['cmid' => $cm->id, 'id'=> $sessionid]);
+$process_url = new \moodle_url('/mod/quiz/accessrule/tcquiz/end_session.php',['cmid' => $cm->id, 'id'=> $sessionid]);
 
-
+//add the button to end the quiz
 $output = '';
 $output .= html_writer::start_tag('form',
           ['action' => $process_url,
@@ -133,7 +127,7 @@ $output .= html_writer::start_tag('div');
 
 
 $output .= html_writer::empty_tag('input', ['type' => 'submit', 'name' => 'responseformsubmit',
-'value' => 'End quiz', 'class' => 'mod_quiz-next-nav btn btn-primary', 'id' => 'responseformsubmit']);
+'value' => get_string('endquiz', 'quizaccess_tcquiz'), 'class' => 'mod_quiz-next-nav btn btn-primary', 'id' => 'responseformsubmit']);
 
 
 $output .= html_writer::start_tag('div');
@@ -141,6 +135,5 @@ $output .= html_writer::start_tag('div');
 $output .= html_writer::end_tag('form');
 
 echo $output;
-
 
 echo $OUTPUT->footer();

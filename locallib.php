@@ -176,7 +176,7 @@ function tcquiz_get_final_results($sessionid,$cmid,$quizid){
   //$_GET["mode"]="no-cors";
   $_GET["mode"]="overview";
   echo "<url>";
-  echo htmlspecialchars_decode(new moodle_url('/mod/quiz/accessrule/tcquiz/report_final_results.php',['mode' => 'overview', 'id' =>$cmid, 'tcqsid' => $sessionid, 'quizid'=>$quizid ]));
+  echo htmlspecialchars_decode(new moodle_url('/mod/quiz/accessrule/tcquiz/report_final_results.php',[ 'id' =>$cmid, 'tcqsid' => $sessionid, 'quizid'=>$quizid ]));
   //echo $CFG->dirroot.'/mod/quiz/accessrule/tcquiz/report_final_results.php?mode=overview&id='.$cmid.'&tcquiz='.$sessionid;
   echo "</url>";
   //$tmp = include($CFG->dirroot.'/mod/tcquiz/report_final_results.php');

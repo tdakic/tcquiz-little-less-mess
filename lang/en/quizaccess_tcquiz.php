@@ -98,6 +98,14 @@ $string['reconnectinstruct'] = 'The quiz is already running - you can connect to
 $string['jointcquiz'] = 'Join quiz';
 $string['joinquizasstudent'] = 'Join quiz as a student';
 
+//for student final results page
+$string['yourfinalscore'] = 'Your final score';
+$string['yourscoreis'] = 'Your score is ';
+$string['yourscorecanchange'] = ' Your score will be changed by your teacher if they did not ask all the questions in the quiz.';
+$string['done'] = 'Done';
+
+//for teacher final results page
+$string['endquiz'] = 'End quiz';
 
 $string['question'] = 'Question ';
 

@@ -199,7 +199,7 @@ class quizaccess_tcquiz extends quizaccess_tcquiz_parent_class_alias {
               if ($fromform = $mform->get_data()){ //form is validated
 
                 $url =  htmlspecialchars_decode(new moodle_url('/mod/quiz/accessrule/tcquiz/teacherstartquiz.php',
-                    ['joincode'=>$fromform->joincode, 'forcenew'=>1, 'cmid' => $this->quiz->cmid, 'quizid'=> $this->quiz->id, 'sesskey' => sesskey()]));
+                    ['joincode'=>$fromform->joincode, 'cmid' => $this->quiz->cmid, 'quizid'=> $this->quiz->id, 'sesskey' => sesskey()]));
 
                 header("Location: ". $url);
                 die();
@@ -218,7 +218,7 @@ class quizaccess_tcquiz extends quizaccess_tcquiz_parent_class_alias {
               if ($fromform = $mform->get_data()){ //form validated
 
                 $url =  htmlspecialchars_decode(new moodle_url('/mod/quiz/accessrule/tcquiz/startattemptstudent.php',
-                    ['joincode'=>$fromform->joincode, 'forcenew'=>1, 'cmid' => $this->quiz->cmid, 'quizid'=> $this->quiz->id, 'sesskey' => sesskey()]));
+                    ['joincode'=>$fromform->joincode, 'cmid' => $this->quiz->cmid, 'quizid'=> $this->quiz->id, 'sesskey' => sesskey()]));
 
                 header("Location: ". $url);
                 die();

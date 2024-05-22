@@ -1,0 +1,131 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Go to the current quiz page. Used in the tcq_review_page in tcquiz renderer.
+ *
+ * @module     quizaccess_tcquiz
+ * @copyright  2024 Capilano University
+ * @author     Tamara Dakic <tdakic@capilanou.ca>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+import {get_string as getString} from 'core/str';
+import Notification from 'core/notification';
+
+
+const registerEventListeners = (sessionid, quizid, cmid, attemptid, page, POLLING_INTERVAL) => {
+// should this listener be more specific ?
+
+window.goToCurrentQuizPageEvent = setInterval(async () =>
+  {await go_to_current_quiz_page(sessionid, quizid, cmid, attemptid, page);}, POLLING_INTERVAL);
+};
+
+
+/**
+ * Go to the next page of the quiz.
+ * @param {sessionid} sessionid The id of the current session.
+ * @param {quizid} quizid The quizid of the current quiz.
+ * @param {cmid} cmid Course module id of the current quiz.
+ * @param {attemptid} attemptid The attemptid of the teacher's attempt.
+ * @param {page} page The current quiz page
+*/
+async function go_to_current_quiz_page(sessionid, quizid, cmid, attemptid, page) {
+
+  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatastudent.php?requesttype=getnumberstudents&quizid='
+    +quizid+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
+    +'&sesskey='+ M.cfg.sesskey+'&page='+page,{method: 'POST'});
+
+  var response_xml_text = await result.text();
+
+  await update_quiz_page(response_xml_text);
+
+}
+
+/**
+* Helper function to parse a response from the server and go to the specified url.
+* same function is in waitforquestion.js - leave for now in case more events added
+* @param {string} response_xml_text The XML returned by quizdatateacher.php
+ */
+function update_quiz_page(response_xml_text) {
+
+  const parser = new DOMParser();
+  const response_xml = parser.parseFromString(response_xml_text, 'text/html');
+
+  var quizresponse = response_xml.getElementsByTagName('tcquiz').item(0);
+
+  //ERROR handling?
+  //var quizresponse = httpRequest.responseXML.getElementsByTagName('questionpage').item(0);
+
+  if (quizresponse === null) {
+    Notification.addNotification({
+        message: getString('invalidserverresponse', 'quizaccess_tcquiz'),
+        type: 'error'
+    });
+    return;
+
+  } else {
+
+    var quizstatus = quizresponse.getElementsByTagName('status').item(0).textContent;
+
+    if (quizstatus == 'showquestion') {
+
+        window.goToCurrentQuizPageEvent = null;
+        clearInterval(window.goToCurrentQuizPageEvent);
+        var attempt_url = quizresponse.getElementsByTagName('url').item(0).textContent;
+        window.location.replace(attempt_url);
+
+    } else if (quizstatus == 'showresults') {
+        //you should be on this page, so do nothing
+        //window.goToCurrentQuizPageEvent = null;
+        //clearInterval(window.goToCurrentQuizPageEvent);
+        //var result_url = quizresponse.getElementsByTagName('url').item(0).textContent;
+        //window.location.replace(result_url);
+
+    } else if (quizstatus == 'finalresults') {
+
+      window.goToCurrentQuizPageEvent = null;
+      clearInterval(window.goToCurrentQuizPageEvent);
+      var final_url = quizresponse.getElementsByTagName('url').item(0).textContent;
+      window.location.replace(final_url);
+
+    } else if (quizstatus == 'quiznotrunning' || quizstatus == 'waitforquestion'|| quizstatus == 'waitforresults' ||
+            quizstatus == 'noaction' ){
+            //keep trying
+
+    } else if (quizstatus == 'error') {
+      var errmsg = quizresponse.getElementsByTagName('message').item(0).textContent;
+
+      Notification.addNotification({
+          message: errmsg,
+          type: 'error'
+      });
+
+    }
+    else{
+      Notification.addNotification({
+          message: getString('unknownserverresponse', 'quizaccess_tcquiz') + quizstatus,
+          type: 'error'
+      });
+
+    }
+  }
+
+}
+
+
+export const init = (sessionid, quizid, cmid, attemptid, page, POLLING_INTERVAL) => {
+  registerEventListeners(sessionid, quizid, cmid, attemptid, page, POLLING_INTERVAL);
+};

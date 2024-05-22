@@ -1,0 +1,76 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template quizaccess_tcquiz/start_tcq
+    Author: T.Dakic, April 2024
+
+    Form to add to add the teacher's tcquiz start page to a quiz view through
+    the description method of the rule class.
+
+    Example context (json):
+    {
+      'existingsession'=>true,              // true/false depending if a session of tcquiz is in progress (exists)
+      'sessionid'=>12345,                   // if 'existingsession' is true, the sessionid of the existingsession
+      'joincode'=>'samplecode',             // if 'existingsession' is true, the joincode of the existingsession  - likely not needed
+      'timestamp'=>timestamp,               // if 'existingsession' is true, the time the existingsession was started
+      'currentpage'=>1,                     // if 'existingsession' is true, the current quiz page of the existingsession
+      'status'=>10,                         // if 'existingsession' is true, the status of the existingsession defined in tcq_constants.json
+      'attemptid'=>12345,                   // if 'existingsession' is true, the attemptid of the teachger's preview
+      'quizid'=>12345,                      // quizid of this quiz
+      'cmid'=>12345                         // cmid of this quiz
+      'formhtml'=>formathtml                // rendered from /mod/quiz/accessrule/tcquiz/classes/form/tcq_start_form.php' contains an input
+                                            // field for joincode and a submit button
+    }
+}}
+
+<div id="starttcquizform">
+  <span class="notifications" id="user-notifications"></span>
+
+  <h2> {{#str}} startnewquiz, quizaccess_tcquiz {{/str}} </h2>
+  <p> {{#str}}  teacherstartnewinstruct, quizaccess_tcquiz {{/str}} </p>
+  <p> {{#str}} teacherwarning, quizaccess_tcquiz {{/str}} </p>
+
+  {{{formhtml}}}
+
+  {{#existingsession}}
+    <br /> <br />
+    <h2> {{#str}}  availablesession, quizaccess_tcquiz {{/str}} </h2>
+    <p> {{#str}} availablesessionsdesc, quizaccess_tcquiz {{/str}} </p>
+    <table class="table table-striped" id="output">
+        <thead>
+            <th> {{#str}} joincode, quizaccess_tcquiz {{/str}} </th>
+            <th> {{#str}} timestarted, quizaccess_tcquiz {{/str}} </th>
+            <th> {{#str}} currentpage, quizaccess_tcquiz {{/str}} </th>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{{joincode}}}</td>
+                    <td>{{{timestamp}}}</td>
+                    <td>{{{currentpage}}}</td>
+                    <td> <button class="btn btn-secondary" name="{{sessionid}}" data-action="quizaccess_tcquiz/starttcq-rejoin_button">{{#str}} rejoin, quizaccess_tcquiz {{/str}}</button></td>
+                    <td> <button class="btn btn-secondary" name="{{sessionid}}" data-action="quizaccess_tcquiz/starttcq-end_button">{{#str}} end, quizaccess_tcquiz {{/str}}</button></td>
+                </tr>
+
+        </tbody>
+    </table>
+  {{/existingsession}}
+</div>
+
+
+{{#js}}
+require(['quizaccess_tcquiz/starttcq'], (module) => module.init('{{sessionid}}', '{{joincode}}','{{timestamp}}','{{currentpage}}', '{{status}}','{{attemptid}}','{{existingsession}}','{{quizid}}', '{{cmid}}'));
+{{/js}}

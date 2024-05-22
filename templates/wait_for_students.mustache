@@ -1,0 +1,12 @@
+
+<h1> {{#str}} waitstudent, quizaccess_tcquiz {{/str}} </h1>
+
+<p> {{#str}} clicknext, quizaccess_tcquiz {{/str}} </p>
+
+<p> {{#str}} numconnectedstudents, quizaccess_tcquiz {{/str}} <span data-region="quizaccess_tcquiz/numberstudents_span">0 <span> <p>
+
+<button class='btn btn-primary' data-action="quizaccess_tcquiz/waitforstudents-next_button">{{#str}} next, quizaccess_tcquiz {{/str}}</button>
+
+{{#js}}
+require(['quizaccess_tcquiz/waitforstudents'], (module) => module.init('{{sessionid}}', '{{joincode}}','{{quizid}}', '{{cmid}}', {{attemptid}}, {{POLLING_INTERVAL}}));
+{{/js}}

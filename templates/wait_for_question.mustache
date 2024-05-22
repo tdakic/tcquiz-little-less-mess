@@ -1,0 +1,7 @@
+
+<h1> {{#str}} waitfirst, quizaccess_tcquiz {{/str}} </h1>
+
+
+{{#js}}
+require(['quizaccess_tcquiz/waitforquestion'], (module) => module.init('{{sessionid}}', '{{joincode}}','{{quizid}}', '{{cmid}}', {{attemptid}}, {{POLLING_INTERVAL}}));
+{{/js}}

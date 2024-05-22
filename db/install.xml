@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/quiz/accessrule/tcquiz/db" VERSION="20240112" COMMENT="XMLDB file for Moodle mod/quiz/accessrule/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+    <TABLES>
+
+      <TABLE NAME="quizaccess_tcquiz" COMMENT="Stores the settings for the tcquiz plugin">
+        <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="quizid"/>
+          <FIELD NAME="quizid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" COMMENT="Foreign key to quiz.id." PREVIOUS="id" NEXT="tcquizrequired"/>
+          <FIELD NAME="tcquizrequired" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="Bool whether tcquiz is required." PREVIOUS="quizid" NEXT="questiontime"/>
+          <FIELD NAME="questiontime" TYPE="int" LENGTH="3" NOTNULL="true" DEFAULT="30" SEQUENCE="false" PREVIOUS="tcquizrequired" COMMENT="How long in seconds do they get for each question?"/>
+        </FIELDS>
+        <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="primary key of the quizaccess_tcquiz table"/>
+        </KEYS>
+        <INDEXES>
+          <INDEX NAME="quizid" UNIQUE="true" FIELDS="quizid" COMMENT="quizid of the quiz administered as tcquiz"/>
+        </INDEXES>
+      </TABLE>
+
+
+      <TABLE NAME="quizaccess_tcquiz_session" COMMENT="Stores the additional information equired for tcquiz to run">
+        <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" SEQUENCE="true"/>
+          <FIELD NAME="quizid" TYPE="int" LENGTH="10" SEQUENCE="false"/>
+          <FIELD NAME="teacherid" TYPE="int" LENGTH="10" SEQUENCE="false" COMMENT="The id of the teacher who is administering the tcquiz"/>
+          <FIELD NAME="status" TYPE="int" LENGTH="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+          <FIELD NAME="currentpagestate" TYPE="int" LENGTH="3" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Primarily used by the timer controls."/>
+          <FIELD NAME="currentpage" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="-1" SEQUENCE="false" COMMENT="Which page of the quiz is presented to the students"/>
+          <FIELD NAME="nextendtime" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+          <FIELD NAME="joincode" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Name given by the teacher when quiz is started"/>
+          <FIELD NAME="timestamp" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" />
+        </FIELDS>
+        <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key of the table, please edit me"/>
+        </KEYS>
+        <INDEXES>
+          <INDEX NAME="quizid" UNIQUE="false" FIELDS="quizid" COMMENT="For looking up the quiz sessions"/>
+          <INDEX NAME="joincode" UNIQUE="true" FIELDS="quizid,joincode" COMMENT="For looking up the quiz sessions by joincode"/>
+        </INDEXES>
+      </TABLE>
+
+      <TABLE NAME="quizaccess_tcquiz_attempt" COMMENT="Stores the attemptids for a given session">
+        <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" SEQUENCE="true"/>
+        <FIELD NAME="sessionid" TYPE="int" LENGTH="10" SEQUENCE="false"/>
+        <FIELD NAME="attemptid" TYPE="int" LENGTH="10" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="quizaccess_tcquiz_session attempts"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="sessionid" UNIQUE="false" FIELDS="sessionid" COMMENT="For looking up the quiz attempts by session id"/>
+        <INDEX NAME="attemptid" UNIQUE="true" FIELDS="attemptid" COMMENT="For looking up the tcquiz session id by attemptid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

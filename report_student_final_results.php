@@ -38,7 +38,7 @@ require_once($CFG->dirroot . '/mod/quiz/accessrule/tcquiz/locallib.php'); //for 
 $attemptid = required_param('attemptid',PARAM_INT);
 $cmid = required_param('cmid', PARAM_INT);
 $quizid = optional_param('quizid', 0, PARAM_INT);
-$sessionid = optional_param('tcqsid', 0, PARAM_INT);
+$sessionid = required_param('tcqsid', PARAM_INT);
 
 global $DB, $CFG, $PAGE;
 
@@ -47,15 +47,15 @@ try {
 } catch (moodle_exception $e) {
     if (!empty($cmid)) {
         list($course, $cm) = get_course_and_cm_from_cmid($cmid, 'quiz');
-        $continuelink = new moodle_url('/mod/quiz/view.php', ['id' => $cmid]);
+        $continuelink = new \moodle_url('/mod/quiz/view.php', ['id' => $cmid]);
         $context = context_module::instance($cm->id);
         if (has_capability('mod/quiz:preview', $context)) {
-            throw new moodle_exception('attempterrorcontentchange', 'quiz', $continuelink);
+            throw new \moodle_exception('attempterrorcontentchange', 'quiz', $continuelink);
         } else {
-            throw new moodle_exception('attempterrorcontentchangeforuser', 'quiz', $continuelink);
+            throw new \moodle_exception('attempterrorcontentchangeforuser', 'quiz', $continuelink);
         }
     } else {
-        throw new moodle_exception('attempterrorinvalid', 'quiz');
+        throw new \moodle_exception('attempterrorinvalid', 'quiz');
     }
 }
 
@@ -64,17 +64,20 @@ require_login($attemptobj->get_course(), false, $attemptobj->get_cm());
 
 // Check that this attempt belongs to this user.
 if ($attemptobj->get_userid() != $USER->id) {
-        throw new moodle_exception('notyourattempt', 'quiz', $attemptobj->view_url());
+        throw new \moodle_exception('notyourattempt', 'quiz', $attemptobj->view_url());
 }
 
 //make sure that the user that the quiz is configured as tcquiz
 if (!$tcquizsession = $DB->get_record('quizaccess_tcquiz_session', array('id' => $sessionid))){
-  throw new moodle_exception('nottcquiz', 'quizaccess_tcquiz', $attemptobj->view_url());
+  throw new \moodle_exception('nottcquiz', 'quizaccess_tcquiz', $attemptobj->view_url());
 }
 
+var_dump($tcquizsession->status);
+var_dump($tcquizsession->id);
+var_dump($sessionid);
 //make sure it is the right time to show the results
 if ($tcquizsession->status != TCQUIZ_STATUS_FINALRESULTS){
-  throw new moodle_exception('notrightquizstate', 'quizaccess_tcquiz', new \moodle_url('/mod/quiz/view.php',['id' => $id ]));
+  throw new \moodle_exception('notrightquizstate', 'quizaccess_tcquiz', new \moodle_url('/mod/quiz/view.php',['id' => $cmid ]));
 }
 
 $marks = $attemptobj->get_sum_marks();

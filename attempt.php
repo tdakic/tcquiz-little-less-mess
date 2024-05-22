@@ -75,7 +75,6 @@ if (!$tcquizsession = $DB->get_record('quizaccess_tcquiz_session', array('id' =>
 //they shouldn't be attempting the quiz page
 if ($tcquizsession->status != TCQUIZ_STATUS_PREVIEWQUESTION  && $tcquizsession->status != TCQUIZ_STATUS_SHOWQUESTION){
   throw new moodle_exception('notrightquizstate', 'quizaccess_tcquiz', $attemptobj->view_url());
-
 }
 //they are trying to access a different page than what the DB is allowing
 if ($tcquizsession->currentpage != $page){

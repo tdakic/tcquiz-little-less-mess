@@ -121,7 +121,7 @@ async function go_to_current_quiz_page(sessionid, quizid, cmid, attemptid) {
 /**
 * Helper function to parse a response from the server and go to the specified url.
 * same function is in waitforquestion.js - leave for now in case more events added
-* @param {string} response_xml_text The XML returned by quizdatateacher.php
+* @param {string} response_xml_text The XML returned by quizdatastudent.php
  */
 function update_quiz_page(response_xml_text) {
 

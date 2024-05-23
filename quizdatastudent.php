@@ -40,7 +40,8 @@ $quizid = required_param('quizid', PARAM_INT);
 $attempt = optional_param('attempt', -1, PARAM_INT );
 $joincode = optional_param('joincode', '', PARAM_ALPHANUM);
 $cmid = optional_param('cmid', -1, PARAM_INT);
-$sessionid = optional_param('sessionid', -1, PARAM_INT);
+//$sessionid = optional_param('sessionid', -1, PARAM_INT);
+$sessionid = required_param('sessionid', PARAM_INT);
 
 /***********************************************************
  * start of main code
@@ -162,13 +163,16 @@ else {
               //$_GET["cmid"]=$cmid;
               $_GET["attemptid"]=$attempt;
 
+
               echo '<status>finalresults</status>';
+              echo "<tcq_session_id>".$tcquiz->id."</tcq_session_id>";
               echo '<classresult>';
               include($CFG->dirroot.'/mod/quiz/accessrule/tcquiz/submitattempt.php');
               echo 'Well done!</classresult>';
-
+              echo "<tcq_session_id>".$tcquiz->id."</tcq_session_id>";
+              echo "<tcq_session_id>".$sessionid."</tcq_session_id>";
               echo '<url>';
-              echo new moodle_url('/mod/quiz/accessrule/tcquiz/report_student_final_results.php',['attemptid' => $attempt, 'quizid' => $quizid, 'cmid' => $cmid, 'tcqsid' => $tcquiz->id ]);
+              echo new moodle_url('/mod/quiz/accessrule/tcquiz/report_student_final_results.php',['attemptid' => $attempt, 'quizid' => $quizid, 'cmid' => $cmid, 'tcqsid' => $sessionid ]);
               echo '</url>';
 
 

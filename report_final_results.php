@@ -43,7 +43,7 @@ $sessionid = optional_param('tcqsid', 0, PARAM_INT);
 $mode ="overview";
 
 //make sure that the quiz is set up as a tcquiz
-if (!$tcquiz = $DB->get_record('quizaccess_tcquiz', array('quizid' => $q))){
+if (!$tcq = $DB->get_record('quizaccess_tcquiz', array('quizid' => $q))){
   //Add new exceptions
   throw new moodle_exception('nottcquiz', 'quizaccess_tcquiz', new moodle_url('/my/courses.php', []));
 }

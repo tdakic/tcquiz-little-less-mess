@@ -68,7 +68,7 @@ if (!$attemptobj->is_preview_user()) {
     $attemptobj->require_capability('mod/quiz:attempt');
 }
 //make sure that the quiz is set up as a tcquiz
-if (!$tcquiz = $DB->get_record('quizaccess_tcquiz', array('quizid' => $quizid))){
+if (!$tcq = $DB->get_record('quizaccess_tcquiz', array('quizid' => $quizid))){
   throw new moodle_exception('nottcquiz', 'quizaccess_tcquiz', $attemptobj->view_url());
 }
 //make sure that the user has the right sessionid
@@ -92,4 +92,4 @@ $attemptobj->process_auto_save($timenow);
 
 // Process the attempt, getting the FINISHED status for the attempt.
 $attemptobj->process_finish_tcq($timenow);
-return;
+//return 1;

@@ -40,6 +40,8 @@ $cmid = required_param('cmid', PARAM_INT);
 $quizid = optional_param('quizid', 0, PARAM_INT);
 $sessionid = required_param('tcqsid', PARAM_INT);
 
+
+
 global $DB, $CFG, $PAGE;
 
 try {

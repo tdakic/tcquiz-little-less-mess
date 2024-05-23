@@ -30,11 +30,10 @@ use mod_quiz\quiz_settings;
 require_once(__DIR__ . '/../../../../config.php');
 global  $DB, $PAGE, $USER;
 
-$joincode = required_param('joincode', PARAM_ALPHANUM);
 $quizid = required_param('quizid', PARAM_INT);
 $cmid = required_param('cmid', PARAM_INT);
-$attemptid = required_param('attemptid', PARAM_INT );
-
+$attemptid = required_param('attemptid', PARAM_INT);
+$sessionid = required_param('sessionid', PARAM_INT);
 
 $quizobj = quiz_settings::create_for_cmid($cmid, $USER->id);
 // Check login and sesskey.
@@ -42,7 +41,7 @@ require_login($quizobj->get_course(), false, $quizobj->get_cm());
 require_sesskey();
 $context = $quizobj->get_context();
 
-if (!$session = $DB->get_record('quizaccess_tcquiz_session', array('quizid' => $quizid,'joincode' => $joincode))){
+if (!$session = $DB->get_record('quizaccess_tcquiz_session', array('quizid' => $quizid,'id' => $sessionid))){
   throw new moodle_exception('nosession', 'quizaccess_tcquiz', $quizobj->view_url());
 }
 
@@ -55,7 +54,7 @@ $output = $PAGE->get_renderer('mod_quiz');
 echo $output->header();
 
 $POLLING_INTERVAL = get_config('quizaccess_tcquiz', 'pollinginterval');
-echo $output->render_from_template('quizaccess_tcquiz/wait_for_question', ['sessionid'=>$session->id, 'joincode'=>$joincode, 'quizid'=>$quizid, 'cmid'=>$cmid,
+echo $output->render_from_template('quizaccess_tcquiz/wait_for_question', ['sessionid'=>$session->id,'quizid'=>$quizid, 'cmid'=>$cmid,
   'attemptid'=>$attemptid, 'POLLING_INTERVAL'=>$POLLING_INTERVAL]);
 
 echo $output->footer();

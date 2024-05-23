@@ -120,7 +120,7 @@ if (!$quizobj->is_preview_user() && $messages) {
 $attempt_id = setup_tcquiz_attempt($quizobj, $session, $currentattemptid, $joincode,$accessmanager,$attemptnumber, $lastattempt);
 
 $url =  htmlspecialchars_decode(new \moodle_url('/mod/quiz/accessrule/tcquiz/wait_for_question.php',
-  ['joincode'=>$joincode, 'cmid' => $id, 'quizid'=> $quiz->id, 'attemptid'=>$attempt_id,  'sesskey' => sesskey()]));
+  ['sessionid'=>$session->id, 'cmid' => $id, 'quizid'=> $quiz->id, 'attemptid'=>$attempt_id,  'sesskey' => sesskey()]));
 
 header("Location: ". $url);
 die();

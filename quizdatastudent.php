@@ -35,7 +35,7 @@ require_once($CFG->libdir.'/filelib.php');
 
 require_login();
 require_sesskey();
-$requesttype = required_param('requesttype', PARAM_ALPHA);
+$requesttype = optional_param('requesttype', '', PARAM_ALPHA);
 $quizid = required_param('quizid', PARAM_INT);
 $attempt = optional_param('attempt', -1, PARAM_INT );
 $joincode = optional_param('joincode', '', PARAM_ALPHANUM);

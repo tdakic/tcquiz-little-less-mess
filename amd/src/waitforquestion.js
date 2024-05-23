@@ -14,7 +14,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Go to the current quiz page.
+ * Redirects a student to the current quiz page. Used when the student
+ * joins the quiz.
  *
  * @module     quizaccess_tcquiz
  * @copyright  2024 Capilano University
@@ -25,16 +26,14 @@
 import Notification from 'core/notification';
 import {get_string as getString} from 'core/str';
 
-const registerEventListeners = (sessionid, joincode, quizid, cmid, attemptid,POLLING_INTERVAL) => {
-
+const registerEventListeners = (sessionid, quizid, cmid, attemptid,POLLING_INTERVAL) => {
   //polling event that determines when the state of the tcquiz has changed
   window.goToCurrentQuizPageEvent = setInterval(async () =>
-    {await go_to_current_quiz_page(sessionid, joincode, quizid, cmid, attemptid);}, POLLING_INTERVAL);
-
+    {await go_to_current_quiz_page(sessionid, quizid, cmid, attemptid);}, POLLING_INTERVAL);
 };
 
-export const init = (sessionid, joincode, quizid, cmid, attemptid, POLLING_INTERVAL) => {
-  registerEventListeners(sessionid, joincode, quizid, cmid, attemptid, POLLING_INTERVAL);
+export const init = (sessionid, quizid, cmid, attemptid, POLLING_INTERVAL) => {
+  registerEventListeners(sessionid, quizid, cmid, attemptid, POLLING_INTERVAL);
 };
 
 /**
@@ -42,15 +41,14 @@ export const init = (sessionid, joincode, quizid, cmid, attemptid, POLLING_INTER
  * The page can be one of the following: attempt page, results page or final results page. This function
  * is also used when the student joins the quiz late.
  * @param {sessionid} sessionid The id of the current session.
- * @param {joincode} joincode The joincode of the current session.
  * @param {quizid} quizid The quizid of the current quiz.
  * @param {cmid} cmid Course module id of the current quiz.
  * @param {attemptid} attemptid The attemptid of the student's attempt.
  */
-async function go_to_current_quiz_page(sessionid, joincode, quizid, cmid, attemptid) {
+async function go_to_current_quiz_page(sessionid, quizid, cmid, attemptid) {
 
-  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatastudent.php?requesttype=getnumberstudents&quizid='
-    +quizid+'&joincode='+joincode+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
+  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatastudent.php?quizid='
+    +quizid+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
     +'&sesskey='+ M.cfg.sesskey,{method: 'POST'});
 
   var response_xml_text = await result.text();
@@ -95,8 +93,6 @@ function update_quiz_page(response_xml_text) {
             clearInterval(window.goToCurrentQuizPageEvent);
             var result_url = quizresponse.getElementsByTagName('url').item(0).textContent;
             window.location.replace(result_url);
-
-              //tcquiz_delayed_request("tcquiz_get_student_question()",900); // Wait for next question to be displayed
           }
           else if (quizstatus == 'finalresults') {
              window.goToCurrentQuizPageEvent = null;
@@ -107,7 +103,6 @@ function update_quiz_page(response_xml_text) {
           else if (quizstatus == 'quiznotrunning' || quizstatus == 'waitforquestion'|| quizstatus == 'waitforresults' ||
                 quizstatus == 'noaction' ){
                 //keep trying
-
           }
           else if (quizstatus == 'error') {
               var errmsg = quizresponse.getElementsByTagName('message').item(0).textContent;
@@ -116,15 +111,12 @@ function update_quiz_page(response_xml_text) {
                   message: errmsg,
                   type: 'error'
               });
-
           }
           else{
               Notification.addNotification({
                   message: getString('unknownserverresponse', 'quizaccess_tcquiz') + quizstatus,
                   type: 'error'
               });
-
           }
         }
-
 }

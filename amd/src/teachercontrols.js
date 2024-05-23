@@ -62,6 +62,7 @@ document.addEventListener('click', async(e) => {
     event.stopImmediatePropagation();
   });
 
+  // handles teacher clicking on the End question button
   const endQuestionAction = document.querySelector(Selectors.actions.endquestionButton);
   endQuestionAction.addEventListener('click', async(e) => {
             e.preventDefault();
@@ -85,6 +86,7 @@ document.addEventListener('click', async(e) => {
 
     var timeLeft = time_for_question; //+1 to wait for everyone?
 
+    //teacher timer
     var timer = setInterval(function() {
         var timeLeft_html = document.querySelector(Selectors.regions.timeLeft);
         timeLeft--;
@@ -101,8 +103,6 @@ document.addEventListener('click', async(e) => {
     }, 1000);
 
 };
-
-
 
 /**
  * Retrieves and updates the number of received student answers

@@ -18,15 +18,15 @@
     @template quizaccess_tcquiz/student_join_tcq_mustache
     Author: T.Dakic, April 2024
 
-    Form to add to add the students's tcquiz start page to a quiz view through
-    the description method of the rule class.
+    Template for a student tcquiz start page. Used in the description method
+    method of the quizaccess_tcquiz class. (rule.php)
 
     Example context (json):
     {
       'quizid'=>12345,                      // quizid of this quiz
       'cmid'=>12345,                        // cmid of this quiz
       'formhtml'=>formhtml                  // rendered from /mod/quiz/accessrule/tcquiz/classes/form/tcq_student_join_form.php contains an input
-                                            // field for joincode and a submit button                               
+                                            // field for joincode and a submit button
 }}
 
 <div id="studentjointcquizform">

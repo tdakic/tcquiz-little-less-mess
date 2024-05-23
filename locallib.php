@@ -335,7 +335,7 @@ function validate_and_start_teacher_tcq_attempt($quiz, $quizobj, $joincode, $las
 
   $sessattempt_id = create_new_tcq_attempt($sessid,$new_attempt->id);
 
-  return $new_attempt->id;
+  return [$new_attempt->id, $sessid];
 }
 
 //This function checks if the $currentattemptid corresponds to an attempt of a TCQuiz. If yes, it returns $currentattemptid

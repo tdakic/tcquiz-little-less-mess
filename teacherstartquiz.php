@@ -92,10 +92,11 @@ if ($tcquiz_session){
 list($currentattemptid, $attemptnumber, $lastattempt, $messages, $page) =
     quiz_validate_new_attempt($quizobj, $accessmanager, $forcenew, $page, false);
 
-$new_attempt_id = validate_and_start_teacher_tcq_attempt($quiz, $quizobj, $joincode, $lastattempt, $attemptnumber, $currentattemptid);
+list($new_attempt_id, $new_sess_id) = validate_and_start_teacher_tcq_attempt($quiz, $quizobj, $joincode, $lastattempt, $attemptnumber, $currentattemptid);
+//$tcquiz_session = $DB->get_record("quizaccess_tcquiz_session", ['quizid' => $quiz->id,'joincode'=>$joincode]);
 
 $url =  htmlspecialchars_decode(new \moodle_url('/mod/quiz/accessrule/tcquiz/wait_for_students.php',
-  ['joincode'=>$joincode, 'cmid' => $id, 'quizid'=> $quiz->id, 'attemptid'=>$new_attempt_id,  'sesskey' => sesskey()]));
+  ['sessionid'=>$new_sess_id, 'joincode'=>$joincode, 'cmid' => $id, 'quizid'=> $quiz->id, 'attemptid'=>$new_attempt_id,  'sesskey' => sesskey()]));
 
 header("Location: ". $url);
 die();

@@ -18,18 +18,19 @@
     @template quizaccess_tcquiz/teacher_quiz_controls
     Author: T.Dakic, April 2024
 
-    Template to add the End button to an attempt page. The template is used in the tcq_teacher_attempt_page
-    method of tcquiz renderer class.
+    Template to add the End Question button to an attempt page. The template is used in the
+    tcq_teacher_attempt_page method of tcquiz renderer class.
 
 
     Example context (json):
     {
       'sessionid'=>12345                    // current tcquiz sessionid
-      'attemptid'=>12345,                   // the attemptid of the teacher's preview
       'quizid'=>12345,                      // quizid of this quiz
       'cmid'=>12345,                        // cmid of this quiz
+      'attemptid'=>12345,                   // the attemptid of the teacher's preview
       'page'=>1,                            // current tcquiz page
       'time_for_question'=>30               // time students have for this question (in seconds)
+      'POLLING_INTERVAL'=>30,               // the frequency of polling from TCQ configuration
     }
 }}
 
@@ -41,7 +42,6 @@
   <p> <button class='btn btn-secondary' data-action="quizaccess_tcquiz/next-question_button">{{#str}} next, quizaccess_tcquiz {{/str}}</button> </p>
   -->
 </div>
-
 
 {{#js}}
 require(['quizaccess_tcquiz/teachercontrols'], (module) => module.init('{{sessionid}}','{{quizid}}', '{{cmid}}',

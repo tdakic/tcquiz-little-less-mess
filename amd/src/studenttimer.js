@@ -58,6 +58,7 @@ const registerEventListeners = (sessionid, quizid, cmid, attemptid, page, time_f
     var timeLeft_html = document.querySelector(Selectors.regions.timeLeft);
     var teacherEndedQuestion = false;
 
+    //timer
     var timer = setInterval(function() {
         timeLeft--;
         timeLeft_html.innerHTML = timeLeft;
@@ -71,6 +72,7 @@ const registerEventListeners = (sessionid, quizid, cmid, attemptid, page, time_f
         }
     }, 1000);
 
+    //checks for teacher ending the question event
     const tecaherEndedQuestionEvent = setInterval(async function() {
       teacherEndedQuestion = await check_question_state(sessionid, quizid, cmid, attemptid);
     }, POLLING_INTERVAL); //1000 means 1 sec, 5000 means 5 seconds
@@ -87,7 +89,7 @@ const registerEventListeners = (sessionid, quizid, cmid, attemptid, page, time_f
  */
 async function check_question_state(sessionid, quizid, cmid, attemptid) {
 
-  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/get_question_state.php?requesttype=getnumberanswers&quizid='
+  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/get_question_state.php?quizid='
     +quizid+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
     +'&sesskey='+ M.cfg.sesskey,{method: 'POST'});
 
@@ -131,8 +133,6 @@ function update_quiz_page(response_xml_text) {
   var quizresponse = response_xml.getElementsByTagName('tcquiz').item(0);
 
   //ERROR handling?
-  //var quizresponse = httpRequest.responseXML.getElementsByTagName('questionpage').item(0);
-
 
   if (quizresponse === null) {
     Notification.addNotification({
@@ -147,6 +147,7 @@ function update_quiz_page(response_xml_text) {
 
     if (quizstatus == 'showquestion') {
 
+        //you should be on this page, so do nothing
         //window.goToCurrentQuizPageEvent = null;
         //clearInterval(window.goToCurrentQuizPageEvent);
         //var attempt_url = quizresponse.getElementsByTagName('url').item(0).textContent;

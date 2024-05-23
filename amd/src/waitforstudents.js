@@ -32,49 +32,47 @@ const Selectors = {
         },
 };
 
-const registerEventListeners = (sessionid, joincode, quizid, cmid, attemptid,POLLING_INTERVAL) => {
+const registerEventListeners = (sessionid, quizid, cmid, attemptid, POLLING_INTERVAL) => {
 
   var updateNumStudentsEvent = setInterval(async () =>
-    {await update_number_of_students(sessionid, joincode, quizid, cmid, attemptid);}, POLLING_INTERVAL);
+    {await update_number_of_students(sessionid, quizid, cmid, attemptid);}, POLLING_INTERVAL);
 
   /* Teacher clicks the next button when they are ready to display the first question */
-  document.addEventListener('click', async (e) => {
-        if (e.target.closest(Selectors.actions.nextButton)) {
+  const nextQuestionAction = document.querySelector(Selectors.actions.nextButton);
+  nextQuestionAction.addEventListener('click', async (e) => {
           e.preventDefault();
           clearInterval(updateNumStudentsEvent);
           updateNumStudentsEvent = null;
 
           var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatateacher.php?requesttype=getquestion&quizid='
-            +quizid+'&joincode='+joincode+'&cmid='+ cmid +'&attempt='+attemptid
+            +quizid+'&cmid='+ cmid +'&attempt='+attemptid
             +'&sessionid='+sessionid+'&rejoin=0&sesskey='+ M.cfg.sesskey,{method: 'POST'});
 
           var response_xml_text = await result.text();
 
           await  go_to_next_url(response_xml_text);
 
-        }
     },{once: true});
 
 };
 
 
-export const init = (sessionid, joincode, quizid, cmid, attemptid, POLLING_INTERVAL) => {
-  registerEventListeners(sessionid, joincode, quizid, cmid, attemptid, POLLING_INTERVAL);
+export const init = (sessionid, quizid, cmid, attemptid, POLLING_INTERVAL) => {
+  registerEventListeners(sessionid, quizid, cmid, attemptid, POLLING_INTERVAL);
 };
 
 
 /**
  * Update the number of students who connected to tcquiz
  * @param {sessionid} sessionid The id of the current session.
- * @param {joincode} joincode The joincode of the current session.
  * @param {quizid} quizid The quizid of the current quiz.
  * @param {cmid} cmid Course module id of the current quiz.
  * @param {attemptid} attemptid The attemptid of the teacher's preview. Needed for displaying the first question.
  */
-async function update_number_of_students(sessionid, joincode, quizid, cmid, attemptid) {
+async function update_number_of_students(sessionid, quizid, cmid, attemptid) {
 
   var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatateacher.php?requesttype=getnumberstudents&quizid='
-    +quizid+'&joincode='+joincode+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
+    +quizid+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
     +'&currentquestion=0&sesskey='+ M.cfg.sesskey,{method: 'POST'});
 
   var response_xml_text = await result.text();

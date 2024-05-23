@@ -15,7 +15,7 @@
 
 /**
  * Used by the teacher to go to the next quiz question or display the final report_final_results - i.e.
- * handeles the teacher clicking the next button even when question solutions are being displayed
+ * handles the teacher clicking the next button even when question solutions are being displayed
  *
  * @module     quizaccess_tcquiz
  * @copyright  2024 Capilano University
@@ -30,10 +30,11 @@ const Selectors = {
 };
 
 const registerEventListeners = (sessionid, quizid, cmid, attemptid, page) => {
-  document.addEventListener('click', async(e) => {
-        if (e.target.closest(Selectors.actions.nextquestionButtonR)) {
+
+  const nextQuestionAction = document.querySelector(Selectors.actions.nextquestionButtonR);
+  nextQuestionAction.addEventListener('click', async(e) => {
           e.preventDefault();
-          //the page of the quiz attempt that will bedsiplayed is detrmined by quizdatateacher.php
+          //the page of the quiz attempt that will be displayed is detrmined by quizdatateacher.php
           //this is left here for possible error checking additions later
           page++;
 
@@ -45,7 +46,6 @@ const registerEventListeners = (sessionid, quizid, cmid, attemptid, page) => {
 
           await  parse_next_url(response_xml_text);
 
-        }
       },{once: true});
 };
 

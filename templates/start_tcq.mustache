@@ -18,8 +18,8 @@
     @template quizaccess_tcquiz/start_tcq
     Author: T.Dakic, April 2024
 
-    Form to add to add the teacher's tcquiz start page to a quiz view through
-    the description method of the rule class.
+    Template for a teacher's tcquiz start page. Used in the description method
+    method of the quizaccess_tcquiz class. (rule.php)
 
     Example context (json):
     {
@@ -32,7 +32,7 @@
       'attemptid'=>12345,                   // if 'existingsession' is true, the attemptid of the teachger's preview
       'quizid'=>12345,                      // quizid of this quiz
       'cmid'=>12345                         // cmid of this quiz
-      'formhtml'=>formathtml                // rendered from /mod/quiz/accessrule/tcquiz/classes/form/tcq_start_form.php' contains an input
+      'formhtml'=>formathtml                // rendered from /mod/quiz/accessrule/tcquiz/classes/form/tcq_start_form.php contains an input
                                             // field for joincode and a submit button
     }
 }}

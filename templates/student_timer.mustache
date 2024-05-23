@@ -21,15 +21,15 @@
     Template to add a timer to student attempt page. The template is used in the tcq_attempt_form (for student)
     method of tcquiz renderer class.
 
-
     Example context (json):
     {
       'sessionid'=>12345                    // current tcquiz sessionid
-      'attemptid'=>12345,                   // the attemptid of the student's attempt
       'quizid'=>12345,                      // quizid of this quiz
       'cmid'=>12345,                        // cmid of this quiz
+      'attemptid'=>12345,                   // the attemptid of the student's attempt
       'page'=>1,                            // current tcquiz page
       'time_for_question'=>30               // time students have for this question (in seconds)
+      'POLLING_INTERVAL'=>30,               // the frequency of polling from TCQ configuration
     }
 }}
 

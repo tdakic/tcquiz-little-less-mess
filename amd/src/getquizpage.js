@@ -14,7 +14,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Go to the current quiz page. Used in the tcq_review_page in tcquiz renderer.
+ * Go to the current quiz page. Used in the tcq_review_page (for student)
+ * in tcquiz renderer.
  *
  * @module     quizaccess_tcquiz
  * @copyright  2024 Capilano University
@@ -27,7 +28,6 @@ import Notification from 'core/notification';
 
 
 const registerEventListeners = (sessionid, quizid, cmid, attemptid, page, POLLING_INTERVAL) => {
-// should this listener be more specific ?
 
 window.goToCurrentQuizPageEvent = setInterval(async () =>
   {await go_to_current_quiz_page(sessionid, quizid, cmid, attemptid, page);}, POLLING_INTERVAL);
@@ -44,7 +44,7 @@ window.goToCurrentQuizPageEvent = setInterval(async () =>
 */
 async function go_to_current_quiz_page(sessionid, quizid, cmid, attemptid, page) {
 
-  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatastudent.php?requesttype=getnumberstudents&quizid='
+  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatastudent.php?quizid='
     +quizid+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
     +'&sesskey='+ M.cfg.sesskey+'&page='+page,{method: 'POST'});
 
@@ -67,7 +67,6 @@ function update_quiz_page(response_xml_text) {
   var quizresponse = response_xml.getElementsByTagName('tcquiz').item(0);
 
   //ERROR handling?
-  //var quizresponse = httpRequest.responseXML.getElementsByTagName('questionpage').item(0);
 
   if (quizresponse === null) {
     Notification.addNotification({

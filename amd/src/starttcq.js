@@ -17,6 +17,10 @@
  * Allows the teacher to start tcquiz
  * Note that the $("#page-content") of the quiz view page is replaced by $("#starttcquizform")
  *
+ * The actual form for typing in the new joincode and starting a new quiz is in
+ * /mod/quiz/accessrule/tcquiz/classes/form/tcq_start_form.php
+ * and is validated by the validation method
+ *
  * @module     quizaccess_tcquiz
  * @copyright  2024 Capilano University
  * @author     Tamara Dakic <tdakic@capilanou.ca>
@@ -38,16 +42,17 @@ const Selectors = {
 
 const registerEventListeners = (sessionid, joincode, timestamp, currentpage, status, attemptid, existingsession, quizid, cmid) => {
 
+    window.addEventListener('load', function(){
 
-    //trying to prevent double clicking here
-    document.addEventListener('click', (e) => {
-          if (e.target.closest(Selectors.actions.startTCQButton)) {
-            e.preventDefault();
-    }},{once: true});
+        $("#page-content").html($("#starttcquizform"));
+
+      });
 
 
-    document.addEventListener('click', async(e) => {
-          if (e.target.closest(Selectors.actions.endButton)) {
+    //handle the teacher clicking on the End button to end the session
+    const endTCQAction = document.querySelector(Selectors.actions.endButton);
+    endTCQAction.addEventListener('click', async(e) => {
+
             e.preventDefault();
 
             var url = M.cfg.wwwroot+"/mod/quiz/accessrule/tcquiz/end_session.php?id="+ e.target.name + "&cmid=" + cmid;
@@ -64,10 +69,11 @@ const registerEventListeners = (sessionid, joincode, timestamp, currentpage, sta
                     location.reload();
                   }
           });
-    }},{once: true});
+    },{once: true});
 
-    document.addEventListener('click', async(e) => {
-          if (e.target.closest(Selectors.actions.rejoinButton)) {
+    //handle the teacher clicking on the Rejoin button to rejoin the running session
+    const rejoinTCQAction = document.querySelector(Selectors.actions.rejoinButton);
+    rejoinTCQAction.addEventListener('click', async(e) => {
             e.preventDefault();
             //constants defined in tcq_constants.json - get them!
             const response = await fetch(M.cfg.wwwroot+"/mod/quiz/accessrule/tcquiz/tcq_constants.json");
@@ -103,15 +109,14 @@ const registerEventListeners = (sessionid, joincode, timestamp, currentpage, sta
                   type: 'error'
               });
             }
-          }
     },{once: true});
 
 
-  window.addEventListener('load', function(){
-
-      $("#page-content").html($("#starttcquizform"));
-
-    });
+    //trying to prevent double clicking here
+    document.addEventListener('click', (e) => {
+          if (e.target.closest(Selectors.actions.startTCQButton)) {
+            e.preventDefault();
+    }},{once: true});
 
 };
 

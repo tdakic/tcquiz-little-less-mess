@@ -15,7 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace quizaccess_tcquiz;
-//namespace accessrule_tcquiz;
 
 /**
  * This class adds tcq functionallity to a quiz attempt

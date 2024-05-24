@@ -36,14 +36,18 @@ require_once($CFG->dirroot . '/mod/quiz/report/overview/report.php');
 
 
 /**
- * Quiz report subclass for the overview (grades) report.
+ * Adds to quiz_overview_report in order to display the final quiz statistics graph
+ * with the grades of the specified TCQ session
  *
- * @copyright 1999 onwards Martin Dougiamas and others {@link http://moodle.com}
+ * @package   quizaccess_tcquiz
+ * @copyright 2024 Tamara Dakic @ Capilano University
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 class tcquiz_overview_report extends quiz_overview_report {
 
-    public function tcq_display_final_graph($quiz, $cm, $course,$sessionid) {
+    /* displays the final graph with the grades from the requested tcq session only */
+    public function tcq_display_final_graph($quiz, $cm, $course, $sessionid) {
         global $DB, $PAGE;
 
         list($currentgroup, $studentsjoins, $groupstudentsjoins, $allowedjoins) = $this->init(
@@ -141,16 +145,6 @@ class tcquiz_overview_report extends quiz_overview_report {
 
             }
 
-        /*    if ($DB->record_exists('quiz_grades', ['quiz' => $quiz->id])) {
-                $data = quiz_report_grade_bands($bandwidth, $bands, $quiz->id, new \core\dml\sql_join());
-                $chart = self::get_chart($labels, $data);
-                $graphname = get_string('overviewreportgraph', 'quiz_overview');
-                // Numerical range data should display in LTR even for RTL languages.
-                echo $output->chart($chart, $graphname, ['dir' => 'ltr']);
-            }
-            */
-
-
             if ($DB->record_exists('quiz_grades', ['quiz' => $quiz->id])) {
 
                 $data = quiz_report_grade_bands($bandwidth, $bands, $quiz->id, new \core\dml\sql_join());
@@ -161,11 +155,7 @@ class tcquiz_overview_report extends quiz_overview_report {
 
                 $grades_to_plot = $DB->get_records_sql($sql, array('sessionid'=>$sessionid));
 
-                //var_dump($grades_to_plot);
-
                 $multiplier = $quiz->sumgrades;
-                //var_dump($multiplier);
-
                 $multiplier = floatval($quiz->grade)/floatval($quiz->sumgrades);
 
                 $frequencies = array_fill(0, $bands, 0);

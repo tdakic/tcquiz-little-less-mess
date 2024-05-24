@@ -30,18 +30,26 @@ require_once($CFG->dirroot . '/mod/quiz/accessrule/tcquiz/report/statistics/tcqs
 use core_question\statistics\responses\analyser;
 
 /**
- * The quiz statistics report provides summary information about each question in
- * a quiz, compared to the whole quiz. It also provides a drill-down to more
- * detailed information about each question.
+ * Adds to quiz_statistics_report in order to display question stats
+ * after the question polling ended
  *
- * @copyright 2008 Jamie Pratt
+ * @package   quizaccess_tcquiz
+ * @copyright 2024 Tamara Dakic @ Capilano University
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 class tcquiz_statistics_report extends quiz_statistics_report {
 
-
-    public function tcq_display_question_stats($quiz, $sessionid, $slot, $cm, $course) {
+  /**
+   * Displays the question statistics for the teacher after the question polling ended
+   *
+   * @param stdClass         $quiz  the quiz settings.
+   * @param int              $sessionid the tcq session id
+   * @param int              $slot the slot of the question being analyzed
+   * @param stdClass         $cm course module
+   * @param stdClass         $course
+   */
+  public function tcq_display_question_stats($quiz, $sessionid, $slot, $cm, $course) {
         global $OUTPUT, $DB;
 
         raise_memory_limit(MEMORY_HUGE);
@@ -54,16 +62,13 @@ class tcquiz_statistics_report extends quiz_statistics_report {
             return true;
         }
 
-
         $variantno = optional_param('variant', null, PARAM_INT);
-
         $whichtries = optional_param('whichtries', question_attempt::LAST_TRY, PARAM_ALPHA);
 
         $pageoptions = [];
         $pageoptions['id'] = $cm->id;
         $pageoptions['mode'] = 'statistics';
 
-        //TTT --- seems dangerous
         $whichattempts = mod_quiz\quiz_attempt::IN_PROGRESS;
 
         $reporturl = new moodle_url('/mod/quiz/report.php', $pageoptions);
@@ -126,21 +131,12 @@ class tcquiz_statistics_report extends quiz_statistics_report {
         }
 
 
-        //$this->output_individual_question_data($quiz, $questionstats->for_slot($slot, $variantno));
-        // the third param is the number of attempts
-
-        /***************************************************************************************/
-
         if ($questionstats->for_slot($slot, $variantno)->s == 0)
         {
-          //echo '<div class="alert alert-danger alert-block fade in alert-dismissible" role="alert">No responses to analyze.</h1>';
           return false;
         }
 
-
-
-
-      return $this->output_individual_question_response_analysis($questions[$slot],
+        return $this->output_individual_question_response_analysis($questions[$slot],
                                                           $variantno,
                                                           $questionstats->for_slot($slot, $variantno)->s,
                                                           $reporturl,
@@ -154,7 +150,7 @@ class tcquiz_statistics_report extends quiz_statistics_report {
     /**
      * Display the response analysis for a question.
      *
-     * @param stdClass           $question  the question to report on.
+     * @param stdClass         $question  the question to report on.
      * @param int|null         $variantno the variant
      * @param int              $s
      * @param moodle_url       $reporturl the URL to redisplay this report.
@@ -172,7 +168,6 @@ class tcquiz_statistics_report extends quiz_statistics_report {
 
         $qtable = new quiz_statistics_question_table($question->id);
 
-        //$qtable->export_class_instance($exportclass);
         if (!$this->table->is_downloading()) {
             // Output an appropriate title.
             $output_str .= $OUTPUT->heading(get_string('analysisofresponses', 'quiz_statistics'), 3);
@@ -248,10 +243,9 @@ class tcquiz_statistics_report extends quiz_statistics_report {
 
 
     /**
-     * Get the quiz and question statistics, either by loading the cached results,
-     * or by recomputing them.
+     * Get the tcqquiz and question statistics
      *
-     * @param stdClass $quiz               the quiz settings.
+     * @param stdClass $quiz             the quiz settings.
      * @param string $whichattempts      which attempts to use, represented internally as one of the constants as used in
      *                                   $quiz->grademethod ie.
      *                                   QUIZ_GRADEAVERAGE, QUIZ_GRADEHIGHEST, QUIZ_ATTEMPTLAST or QUIZ_ATTEMPTFIRST

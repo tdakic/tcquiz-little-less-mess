@@ -17,10 +17,9 @@
 /**
  * Common functions for the tcquiz statistics report.
  *
- * @package    tcquiz_statistics
- * @copyright  2013 The Open University
- * @author     James Pratt me@jamiep.org
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   quizaccess_tcquiz
+ * @copyright 2024 Tamara Dakic @ Capilano University
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 use mod_quiz\quiz_attempt;
@@ -30,7 +29,8 @@ defined('MOODLE_INTERNAL') || die;
 /**
  * SQL to fetch relevant 'tcquiquizz_attempts' records.
  *
- * @param int    $tcquizid        tcquiquizz id to get attempts for
+ * @param int    $tcquizid        tcquiz id to get attempts for
+ * @param int    $sessiond        id of the current session of tcquiz
  * @param \core\dml\sql_join $groupstudentsjoins Contains joins, wheres, params, empty if not using groups
  * @param string $whichattempts which attempts to use, represented internally as one of the constants as used in
  *                                   $tcquiquizz->grademethod ie.
@@ -74,7 +74,8 @@ function tcquiz_statistics_attempts_sql($tcquizid, $sessionid, \core\dml\sql_joi
 /**
  * Return a {@link qubaid_condition} from the values returned by {@link tcquiz_statistics_attempts_sql}.
  *
- * @param int     $tcquizid
+ * @param int    $tcquizid        the id of tcquiz
+ * @param int    $sessiond        id of the current session of tcquiz
  * @param \core\dml\sql_join $groupstudentsjoins Contains joins, wheres, params
  * @param string $whichattempts which attempts to use, represented internally as one of the constants as used in
  *                                   $tcquiz->grademethod ie.

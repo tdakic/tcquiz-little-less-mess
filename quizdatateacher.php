@@ -140,7 +140,7 @@ if ($requesttype == 'startquiz') {
         $session->status = TCQUIZ_STATUS_FINALRESULTS;
         $DB->update_record('quizaccess_tcquiz_session', $session); // FIXME - not update all fields?
         tcquiz_start_response();
-        tcquiz_get_final_results($session->id,$cmid,$quizid);
+        tcquiz_get_final_results($session->id, $cmid, $quizid);
         tcquiz_end_response();
         return;
       }
@@ -209,7 +209,7 @@ else if ($requesttype == 'getnumberanswers') {
     tcquiz_end_response();
 }
 
-else if ($requesttype == 'getfinalresults'){
+/*else if ($requesttype == 'getfinalresults'){
     tcquiz_start_response();
     $tcqsid = required_param('tcqsid', PARAM_INT);
     $session->status = TCQUIZ_STATUS_FINALRESULTS;
@@ -218,7 +218,7 @@ else if ($requesttype == 'getfinalresults'){
     tcquiz_get_final_results($session);
     tcquiz_end_response();
 
-}
+}*/
 
 else if ($requesttype == 'endquiz'){
     tcquiz_start_response();

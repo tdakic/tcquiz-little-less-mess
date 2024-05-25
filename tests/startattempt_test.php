@@ -208,7 +208,7 @@ public function test_teacherstartquiz(){
   list($currentattemptid, $attemptnumber, $lastattempt, $messages, $page) =
       quiz_validate_new_attempt($quizobj, $accessmanager, true, -1, false);
 
-  $newattemptid = validate_and_start_teacher_tcq_attempt($quiz, $quizobj, "testcode", $lastattempt, $attemptnumber, $currentattemptid);
+  $newattemptid = validate_and_start_teacher_tcq_attempt($quizobj, "testcode", $lastattempt, $attemptnumber, $currentattemptid);
 
   //check that the session with the new joincode is created
   $session = $DB->get_record("quizaccess_tcquiz_session", ['quizid' => $quiz->id,'joincode'=>"testcode"]);
@@ -222,7 +222,7 @@ public function test_teacherstartquiz(){
   list($currentattemptid1, $attemptnumber1, $lastattempt1, $messages1, $page1) =
       quiz_validate_new_attempt($quizobj, $accessmanager, true, -1, false);
 
-  $newattemptid1 = validate_and_start_teacher_tcq_attempt($quiz, $quizobj, "testcode1", $lastattempt1, $attemptnumber1, $currentattemptid1);
+  $newattemptid1 = validate_and_start_teacher_tcq_attempt($quizobj, "testcode1", $lastattempt1, $attemptnumber1, $currentattemptid1);
 
   //check that the previous teacher attempt is deleted
   $attemptt = $DB->get_record("quiz_attempts", ['id' => $newattemptid]);

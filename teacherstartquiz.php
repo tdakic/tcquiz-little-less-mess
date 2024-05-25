@@ -92,7 +92,7 @@ if ($tcquiz_session){
 list($currentattemptid, $attemptnumber, $lastattempt, $messages, $page) =
     quiz_validate_new_attempt($quizobj, $accessmanager, $forcenew, $page, false);
 
-list($new_attempt_id, $new_sess_id) = validate_and_start_teacher_tcq_attempt($quiz, $quizobj, $joincode, $lastattempt, $attemptnumber, $currentattemptid);
+list($new_attempt_id, $new_sess_id) = validate_and_start_teacher_tcq_attempt( $quizobj, $joincode, $lastattempt, $attemptnumber, $currentattemptid);
 //$tcquiz_session = $DB->get_record("quizaccess_tcquiz_session", ['quizid' => $quiz->id,'joincode'=>$joincode]);
 
 $url =  htmlspecialchars_decode(new \moodle_url('/mod/quiz/accessrule/tcquiz/wait_for_students.php',

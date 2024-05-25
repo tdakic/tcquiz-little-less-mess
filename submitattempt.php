@@ -81,7 +81,6 @@ if ($tcquizsession->status != TCQUIZ_STATUS_FINALRESULTS){
   throw new moodle_exception('notrightquizstate', 'quizaccess_tcquiz', $attemptobj->view_url());
 }
 
-
 // Set up auto-save if required.
 $autosaveperiod = get_config('quiz', 'autosaveperiod');
 if ($autosaveperiod) {

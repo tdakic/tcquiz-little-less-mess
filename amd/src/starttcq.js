@@ -98,7 +98,6 @@ const registerEventListeners = (sessionid, joincode, timestamp, currentpage, sta
               window.location.replace(url);
             }
             else if (status == tcq_consts.TCQUIZ_STATUS_FINALRESULTS){
-              //tcquiz_get_final_results();
               url = M.cfg.wwwroot+"/mod/quiz/accessrule/tcquiz/report_final_results.php?mode=overview&quizid="+ quizid +
               "&id=" + cmid + "&tcqsid=" + sessionid + "&sesskey="+ M.cfg.sesskey;
               window.location.replace(url);

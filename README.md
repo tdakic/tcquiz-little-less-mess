@@ -23,12 +23,29 @@ It is possible that there is already a running session of the TCQuiz and the tea
 
 If a student crashes, they will be able to reconnect from the quiz view page using the quiz code.
 
-The teacher controls the quiz using a two buttons: End Question button ends the current question and displays its results. The Next button skips to the next question. The students have a Submit button which they can click only once and when they do, the number of received answers on the teachers “control board” is updated.
+The teacher can end the question by clicking the End Question button. clicking that button ends the current question and displays its results.  The students have a Submit button which they can click only once and when they do, the number of received answers on the teachers “control board” is updated.
 
 <img width="215" alt="Screenshot 2024-05-27 at 12 59 59 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/d1160fae-4b61-406d-9380-ff9d4f28c3d0">
 
+Here is the teacher view while a question is being administered:
 
-The code does work, but one should be gentle to it. Do not click the Next button while the students are answering a question, for example and please only one question per page for now (it might work otherwise, but not tested at all)
+<img width="518" alt="Screenshot 2024-05-27 at 1 16 50 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/9e2210fc-64b2-43af-90c2-f0da21367529">
+
+
+and here is the students:
+
+![Screenshot 2024-05-27 at 1 16 43 PM](https://github.com/tdakic/tcquiz/assets/9156749/220450bb-db0c-4ba7-bd17-8ba15e6f0428)
+
+
+(The timers should match - it is me who was slow to switch)
+
+After the time has elapsed the student will see:
+
+![Screenshot 2024-05-27 at 1 18 44 PM](https://github.com/tdakic/tcquiz/assets/9156749/bef7280e-75d1-4493-a766-9ee0bdbaadbc)
+
+and the teacher will see:
+
+<img width="491" alt="Screenshot 2024-05-27 at 1 18 30 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/debf8c8f-df55-4187-aa3b-3c22be0846ce">
 
 There are quite a few design decisions to be made and the code needs clean up. Please let me know if you have any ideas or suggestions or would like to help. Below is what I think needs work. The list is not complete, is going to be changing and is not in any particular order.
 

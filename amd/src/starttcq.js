@@ -42,16 +42,26 @@ const Selectors = {
 
 const registerEventListeners = (sessionid, joincode, timestamp, currentpage, status, attemptid, existingsession, quizid, cmid) => {
 
-    window.addEventListener('load', function(){
+  /*  window.addEventListener('load', function(){
 
-        $("#page-content").html($("#starttcquizform"));
+        $("#page-content").html($("#starttcquizform"),false);
 
       });
 
+*/
 
-    //handle the teacher clicking on the End button to end the session
+      if (document.readyState === "complete") {
+          $("#page-content").html($("#starttcquizform"),false);
+      } else {
+        window.addEventListener('load', function(){
+            $("#page-content").html($("#starttcquizform"),false);
+          });
+      }
+
+    //handle the teacher clicking on the End button to end the session (if there is one)
     const endTCQAction = document.querySelector(Selectors.actions.endButton);
-    endTCQAction.addEventListener('click', async(e) => {
+    if (endTCQAction !== null){
+      endTCQAction.addEventListener('click', async(e) => {
 
             e.preventDefault();
 
@@ -69,11 +79,12 @@ const registerEventListeners = (sessionid, joincode, timestamp, currentpage, sta
                     location.reload();
                   }
           });
-    },{once: true});
-
-    //handle the teacher clicking on the Rejoin button to rejoin the running session
+      },{once: true});
+    }
+    //handle the teacher clicking on the Rejoin button to rejoin the running session (if there is one)
     const rejoinTCQAction = document.querySelector(Selectors.actions.rejoinButton);
-    rejoinTCQAction.addEventListener('click', async(e) => {
+    if (endTCQAction !== null){
+      rejoinTCQAction.addEventListener('click', async(e) => {
             e.preventDefault();
             //constants defined in tcq_constants.json - get them!
             const response = await fetch(M.cfg.wwwroot+"/mod/quiz/accessrule/tcquiz/tcq_constants.json");
@@ -108,7 +119,8 @@ const registerEventListeners = (sessionid, joincode, timestamp, currentpage, sta
                   type: 'error'
               });
             }
-    },{once: true});
+      },{once: true});
+    }
 
 
     //trying to prevent double clicking here

@@ -32,10 +32,17 @@ import $ from 'jquery';
 
 const registerEventListeners = () => {
 
-   window.addEventListener('load', function(){
+  /* window.addEventListener('load', function(){
 
       $("#page-content").html($("#studentjointcquizform"));
-    });
+    });*/
+    if (document.readyState === "complete") {
+        $("#page-content").html($("#studentjointcquizform"));
+    } else {
+      window.addEventListener('load', function(){
+        $("#page-content").html($("#studentjointcquizform"));
+        });
+    }
 
 };
 

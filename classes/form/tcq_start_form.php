@@ -31,7 +31,7 @@ class tcq_start_form extends moodleform {
         $mform = $this->_form;
 
         //I want the two items in this form to be displayed side-by-side
-        $mform->addElement('html', '<style> .fitem {display: inline-block;}</style>');
+        //$mform->addElement('html', '<style> .fitem {display: inline-block;}</style>'); //moved to start_tcq.mustache
 
         $mform->addElement('submit', 'start_new_session_button', get_string('startnewquiz', 'quizaccess_tcquiz'));
         $mform->addElement('text', 'joincode', '',['placeholder'=> get_string('enterjoincode', 'quizaccess_tcquiz')]);

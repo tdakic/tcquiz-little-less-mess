@@ -65,4 +65,3 @@ There are quite a few design decisions to be made and the code needs more clean 
 *	Is TCQUIZ_STATUS_SHOWQUESTION (20) from locallib.php ever used? Left for now, for when the teacher controls are improved.
 *	Fix DB updates, so only the fields that need updated are updated.
 
-

@@ -9,16 +9,16 @@ After the plugin is installed, any quiz can be administered as a TCQuiz, by sele
 
 If a quiz is set up as a TCQuiz, the view page of the quiz is altered so the teacher can start the quiz:
 
- <img width="600" alt="image" src="https://github.com/tdakic/tcquiz/assets/9156749/03d15b12-4d50-4727-a6ad-5e2d92bc1ba2">
+<img width="517" alt="Screenshot 2024-05-27 at 12 46 14 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/777175a2-0833-47dd-96b5-eb0fb21098b0">
 
-The teacher should choose an identifying code for the session (alpha chars for now), type it in the box and click the button. Then the students should use the same code to join the session: 
+The teacher should choose an identifying code for the session (alphanumeric), type it in the box and click the button. Then the students should use the same code to join the session: 
 
-<img width="600" alt="image" src="https://github.com/tdakic/tcquiz/assets/9156749/ec7fb818-59c4-4a0f-b96e-848d2dab3b9e">
+![Screenshot 2024-05-27 at 12 49 34 PM](https://github.com/tdakic/tcquiz/assets/9156749/f706be0b-79ca-4e94-ac33-889c9b5db94d)
 
 
 It is possible that there is already a running session of the TCQuiz and the teacher somehow got disconnected. In that case, the option to rejoin the session will be given to the teacher:
 
- <img width="600" alt="image" src="https://github.com/tdakic/tcquiz/assets/9156749/5ee3afd4-807c-4ea1-90d1-def487ce72b5">
+ <img width="500" alt="image" src="https://github.com/tdakic/tcquiz/assets/9156749/5ee3afd4-807c-4ea1-90d1-def487ce72b5">
 
 
 If a student crashes, they will be able to reconnect from the quiz view page using the quiz code.

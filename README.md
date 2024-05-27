@@ -27,14 +27,14 @@ The teacher can end the question by clicking the End Question button. clicking t
 
 <img width="215" alt="Screenshot 2024-05-27 at 12 59 59 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/d1160fae-4b61-406d-9380-ff9d4f28c3d0">
 
-Here is the teacher view while a question is being administered:
+Here is the teacher's view while a question is being administered:
 
-<img width="518" alt="Screenshot 2024-05-27 at 1 16 50 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/9e2210fc-64b2-43af-90c2-f0da21367529">
+<img width="518" alt="Teacher question view" src="https://github.com/tdakic/tcquiz/assets/9156749/9e2210fc-64b2-43af-90c2-f0da21367529">
 
 
-and here is the students:
+and here is the students':
 
-![Screenshot 2024-05-27 at 1 16 43 PM](https://github.com/tdakic/tcquiz/assets/9156749/220450bb-db0c-4ba7-bd17-8ba15e6f0428)
+<img width="550" alt="Student question view" src="https://github.com/tdakic/tcquiz/assets/9156749/220450bb-db0c-4ba7-bd17-8ba15e6f0428">
 
 
 (The timers should match - it is me who was slow to switch)

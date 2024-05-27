@@ -93,7 +93,7 @@ $output .= html_writer::start_tag('h2');
 $output .= get_string('yourfinalscore', 'quizaccess_tcquiz');
 $output .= html_writer::end_tag('h2');
 $output .= html_writer::start_tag('p');
-$output .= get_string('yourscoreis', 'quizaccess_tcquiz') . $marks * $multiplier. " / ".floatval($quiz->grade).'. '.get_string('yourscorecanchange', 'quizaccess_tcquiz');
+$output .= get_string('yourscoreis', 'quizaccess_tcquiz') . number_format($marks * $multiplier, 2). " / ".floatval($quiz->grade).'. '.get_string('yourscorecanchange', 'quizaccess_tcquiz');
 $output .= html_writer::end_tag('p');
 
 $process_url = new \moodle_url('/mod/quiz/view.php',['id' => $cmid]);

@@ -54,6 +54,12 @@ const registerEventListeners = (sessionid, quizid, cmid, attemptid, page, time_f
         $('#responseformsubmit').attr('disabled', 'disabled');
     });
 
+    //this should prevent "Unsaved changes" pop-up which might happen if the student typed something
+    //but didn't click submit
+    window.addEventListener('beforeunload', function (event) {
+      event.stopImmediatePropagation();
+    });
+
     var timeLeft = time_for_question; //+1 to wait for everyone?
     var timeLeft_html = document.querySelector(Selectors.regions.timeLeft);
     var teacherEndedQuestion = false;
@@ -110,7 +116,7 @@ async function check_question_state(sessionid, quizid, cmid, attemptid) {
 */
 async function go_to_current_quiz_page(sessionid, quizid, cmid, attemptid) {
 
-  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatastudent.php?requesttype=getanswer&quizid='
+  var  result = await fetch(M.cfg.wwwroot+'/mod/quiz/accessrule/tcquiz/quizdatastudent.php?quizid='
     +quizid+'&sessionid='+sessionid+'&cmid='+ cmid +'&attempt='+attemptid
     +'&sesskey='+ M.cfg.sesskey,{method: 'POST'});
 

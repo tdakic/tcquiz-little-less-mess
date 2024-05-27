@@ -127,7 +127,7 @@ if (!$attemptobj->is_preview_user()){
 }
 else {
   //TCQUIZ_STATUS_SHOWRESULTS defined in localib.php as 30
-  sleep(1); // allows everyone to submit?
+  //sleep(1); // allows everyone to submit?
   $session->status = TCQUIZ_STATUS_SHOWRESULTS;
   $DB->update_record('quizaccess_tcquiz_session', $session);
   $url = htmlspecialchars_decode(new moodle_url('/mod/quiz/accessrule/tcquiz/review_tcq.php',['page' => $page, 'sesskey' => sesskey(),'showall' => 0, 'attempt' => $attemptid, 'sessionid' => $sessionid, 'cmid' => $cmid, 'quizid' => $quizid ]));

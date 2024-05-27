@@ -161,6 +161,7 @@ $string['hideusers'] = 'Hide users';
 $string['httperror'] = 'There was a problem with the request - status: ';
 $string['httprequestfail'] = 'Giving up :( Cannot create an XMLHTTP instance';
 $string['incorrectstatus'] = 'Quiz has incorrect status: \'';
+$string['incorrectrequestype'] = 'Incorrect requesttype: \'';
 $string['invalidanswer'] = 'Invalid answer number ';
 
 

@@ -47,7 +47,7 @@ $sessionid = required_param('sessionid', PARAM_INT);
 
 tcquiz_start_response();
 /* these are checked in the urls that this script returns
-   because of polling this migh add up a big load to the server
+   because of polling this might add up a big load to the server
 if (!$quiz = $DB->get_record("quiz", array('id' => $quizid))) {
     tcquiz_send_error("Quiz ID incorrect");
     tcquiz_end_response();

@@ -70,6 +70,8 @@ document.addEventListener('click', async(e) => {
             updateNumAnswersEvent = null;
 
             document.querySelector(Selectors.regions.timeLeft).innerHTML = 0; //will this stop setInterval?
+            clearInterval(timer);
+            timer = null;
             const req = new XMLHttpRequest();
             req.open("POST", M.cfg.wwwroot+
               '/mod/quiz/accessrule/tcquiz/change_question_state.php?sessionid='+sessionid+'&cmid='+cmid);

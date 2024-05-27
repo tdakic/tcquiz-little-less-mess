@@ -32,12 +32,15 @@ Here is the teacher's view while a question is being administered:
 <img width="518" alt="Teacher question view" src="https://github.com/tdakic/tcquiz/assets/9156749/9e2210fc-64b2-43af-90c2-f0da21367529">
 
 
+
 and here is the students':
 
 <img width="550" alt="Student question view" src="https://github.com/tdakic/tcquiz/assets/9156749/220450bb-db0c-4ba7-bd17-8ba15e6f0428">
 
 
 (The timers should match - it is me who was slow to switch)
+
+
 
 After the time has elapsed the student will see:
 
@@ -47,33 +50,19 @@ and the teacher will see:
 
 <img width="491" alt="Screenshot 2024-05-27 at 1 18 30 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/debf8c8f-df55-4187-aa3b-3c22be0846ce">
 
-There are quite a few design decisions to be made and the code needs clean up. Please let me know if you have any ideas or suggestions or would like to help. Below is what I think needs work. The list is not complete, is going to be changing and is not in any particular order.
+There are quite a few design decisions to be made and the code needs more clean up. Please let me know if you have any ideas or suggestions or would like to help. Below is what I think needs work. The list is not complete, is going to be changing and is not in any particular order.
 
 To Do List 
 
-*	Design a nice teacher control board. For some reason the css for the question has not loaded yet when the control board is displayed – I tried using the same classes.  Should the control board have a Pause button to pause the question? Should it have a Start button to start a question – from a design point it seems better than starting the timer from the renderer, but not clear how it is from the user perspective.
-*	Prevent double clicking on a button.
-*	Develop unit tests (PHPUnit and behat finally  work on my Mac that has a hodge podge of composer, brew and basic download installations – took a while).
-*	Develop behat tests.
-*	The php parameters are flying back and forth. Limit their number and also remove the DB hack from the renderer. Joincode should likely only be used to connect after which sessionid should be passed around. Should sessionid be set up from attempt.php at the same time as attemptid?
-*	Is the parameter currentquestion needed? Seems that currentpage is used instead. In DB as well.
-*	Check privileges for each file. Change_question_state.php is critical 
+*	Design a nice teacher control board.  Should the control board have a Pause button to pause the question? Should it have a Start button to start a question – from a design point it seems better than starting the timer from the renderer, but not clear how it is from the user perspective.
+*	Develop more unit tests (PHPUnit and behat finally work on my Mac that has a hodge podge of composer, brew and basic download installations – took a while).
+*	Develop more behat tests.
 *	Fix language strings
-*	Fix $process_url in the renderer
 *	Quiz with multiple questions per page is not tested at all.
 *	Use the defined capability instead of mod/quiz:preview
-*	Is TCQUIZ_STATUS_SHOWQUESTION (20) from locallib.php ever used?
+*	Is TCQUIZ_STATUS_SHOWQUESTION (20) from locallib.php ever used? Left for now, for when the teacher controls are improved.
 *	Fix DB updates, so only the fields that need updated are updated.
-*	Set page headers as in attempt.php (says viewing page x of y in the tab)
-*	Figure out why document.getelementbyid  works but  jquerry doesn’t 
-*	report_final_results.php uses a regular quiz attempt object – change it to tcquiz attempt object?
-*	Comments (always last, but shouldn’t be :-))
 
-
-Known bugs
-
-*	The flag in the attempt form is clickable, but it doesn’t appear to be.
-*	Sometimes if the student joins with the right joincode they don’t get the question – timing of the polling? Or case TCQUIZ_STATUS_FINISHED: in quizdatastudent.php?
 
 
 

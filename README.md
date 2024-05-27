@@ -21,11 +21,10 @@ It is possible that there is already a running session of the TCQuiz and the tea
 <img width="507" alt="TCQ teacher start screen with an existing session" src="https://github.com/tdakic/tcquiz/assets/9156749/193d8b99-37b2-4195-8c35-dedc63bae07c">
 
 
+
 If a student crashes, they will be able to reconnect from the quiz view page using the quiz code.
 
-The teacher can end the question by clicking the End Question button. clicking that button ends the current question and displays its results.  The students have a Submit button which they can click only once and when they do, the number of received answers on the teachers “control board” is updated.
 
-<img width="215" alt="Screenshot 2024-05-27 at 12 59 59 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/d1160fae-4b61-406d-9380-ff9d4f28c3d0">
 
 Here is the teacher's view while a question is being administered:
 

@@ -50,11 +50,14 @@ and the teacher will see:
 
 <img width="491" alt="Screenshot 2024-05-27 at 1 18 30 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/debf8c8f-df55-4187-aa3b-3c22be0846ce">
 
+After the teacher administered all the questions, the students will see their score and the teacher will see the histogram of the student scores.
+
+
+## To Do List 
+
 There are quite a few design decisions to be made and the code needs more clean up. Please let me know if you have any ideas or suggestions or would like to help. Below is what I think needs work. The list is not complete, is going to be changing and is not in any particular order.
 
-To Do List 
-
-*	Design a nice teacher control board.  Should the control board have a Pause button to pause the question? Should it have a Start button to start a question – from a design point it seems better than starting the timer from the renderer, but not clear how it is from the user perspective.
+*	Design a nice teacher control board.  Should the control board have a Pause button to pause a question? Should it have a Start button to start a question – from a design point it seems better than starting the timer from the renderer, but not clear how it is from the user perspective.
 *	Develop more unit tests (PHPUnit and behat finally work on my Mac that has a hodge podge of composer, brew and basic download installations – took a while).
 *	Develop more behat tests.
 *	Fix language strings
@@ -62,8 +65,5 @@ To Do List
 *	Use the defined capability instead of mod/quiz:preview
 *	Is TCQUIZ_STATUS_SHOWQUESTION (20) from locallib.php ever used? Left for now, for when the teacher controls are improved.
 *	Fix DB updates, so only the fields that need updated are updated.
-
-
-
 
 

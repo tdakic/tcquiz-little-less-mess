@@ -9,23 +9,23 @@ After the plugin is installed, any quiz can be administered as a TCQuiz, by sele
 
 If a quiz is set up as a TCQuiz, the view page of the quiz is altered so the teacher can start the quiz:
 
-<img width="517" alt="Screenshot 2024-05-27 at 12 46 14 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/777175a2-0833-47dd-96b5-eb0fb21098b0">
+<img width="517" alt="TCQ teacher start screen" src="https://github.com/tdakic/tcquiz/assets/9156749/777175a2-0833-47dd-96b5-eb0fb21098b0">
 
 The teacher should choose an identifying code for the session (alphanumeric), type it in the box and click the button. Then the students should use the same code to join the session: 
 
-![Screenshot 2024-05-27 at 12 49 34 PM](https://github.com/tdakic/tcquiz/assets/9156749/f706be0b-79ca-4e94-ac33-889c9b5db94d)
+<img width="350" alt="TCQ student start screen" src="https://github.com/tdakic/tcquiz/assets/9156749/f706be0b-79ca-4e94-ac33-889c9b5db94d">
 
 
 It is possible that there is already a running session of the TCQuiz and the teacher somehow got disconnected. In that case, the option to rejoin the session will be given to the teacher:
 
- <img width="500" alt="image" src="https://github.com/tdakic/tcquiz/assets/9156749/5ee3afd4-807c-4ea1-90d1-def487ce72b5">
+<img width="507" alt="TCQ teacher start screen with an existing session" src="https://github.com/tdakic/tcquiz/assets/9156749/193d8b99-37b2-4195-8c35-dedc63bae07c">
 
 
 If a student crashes, they will be able to reconnect from the quiz view page using the quiz code.
 
 The teacher controls the quiz using a two buttons: End Question button ends the current question and displays its results. The Next button skips to the next question. The students have a Submit button which they can click only once and when they do, the number of received answers on the teachers “control board” is updated.
 
- <img width="250" alt="image" src="https://github.com/tdakic/tcquiz/assets/9156749/6c798fde-d313-4e79-a948-bb658d2edd88">
+<img width="215" alt="Screenshot 2024-05-27 at 12 59 59 PM" src="https://github.com/tdakic/tcquiz/assets/9156749/d1160fae-4b61-406d-9380-ff9d4f28c3d0">
 
 
 The code does work, but one should be gentle to it. Do not click the Next button while the students are answering a question, for example and please only one question per page for now (it might work otherwise, but not tested at all)
